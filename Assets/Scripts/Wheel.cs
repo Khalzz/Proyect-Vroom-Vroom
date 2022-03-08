@@ -69,6 +69,8 @@ public class Wheel : MonoBehaviour
 
     private CarController car;
 
+    public float fDrive;
+
     /*
     void OnDrawGizmos()
     {
@@ -97,7 +99,7 @@ public class Wheel : MonoBehaviour
 
         if (Input.GetAxis("Throttle") > 0)
         {
-            fX = Input.GetAxis("Throttle") * springForce;
+            fX = Input.GetAxis("Throttle") * fDrive;
         }
         
         if (Input.GetAxis("Brake") > 0 && velocity.magnitude > 0f)
