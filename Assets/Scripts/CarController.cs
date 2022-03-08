@@ -19,6 +19,12 @@ public class CarController : MonoBehaviour
     public float maxRpm;
 
     public float fDrive;
+    public float fBrake;
+
+    public Vector3 velocity;
+    public Vector3 fDrag;
+    public float cDrag;
+    public float fSpeed;
 
     public int actualGear = 1;
     public float[] gearsRatio = new float[10];
@@ -31,6 +37,13 @@ public class CarController : MonoBehaviour
 
     void Update()
     {
+        velocity = GetComponent<Rigidbody>().velocity;
+        fSpeed = Mathf.Sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
+        fDrag.x = -cDrag * velocity.x * fSpeed;
+        fDrag.z = -cDrag * velocity.z * fSpeed;
+
+
+
         rpm = (((GetComponent<Rigidbody>().velocity.magnitude * 0.621371f) * gearsRatio[actualGear] * 336) / 0.6f);
         speedText.text = (GetComponent<Rigidbody>().velocity.magnitude * 3.6f).ToString("F0") + "Km/h";
 
@@ -42,21 +55,22 @@ public class CarController : MonoBehaviour
         }
         else
         {
-            fDrive = (Input.GetAxis("Throttle") * 412 * gearsRatio[actualGear]) / 0.3f;
+            fDrive = (Input.GetAxis("Throttle") * (412 * gearsRatio[actualGear]) / 0.3f);
+            fBrake = (Input.GetAxis("Brake") * -(412 * gearsRatio[actualGear]) / 0.3f);
         }
 
         rpmText.text = rpm.ToString();
 
-        if (actualGear > 0 && actualGear < 5)
+        if (actualGear >= 1 && actualGear < 4)
         {
             gearText.text = (actualGear).ToString();
-        } 
+        }
         else if (actualGear == 0)
         {
             gearText.text = "N";
         }
 
-        
+
 
         if (Input.GetButtonDown("UpShift"))
         {
@@ -110,6 +124,22 @@ public class CarController : MonoBehaviour
             if (w.wheelFrontRight)
                 w.steerAngle = ackermannAngleRight;
             w.fDrive = fDrive;
+            w.fDrag = fDrag;
+            w.fBrake = fBrake;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (transform.InverseTransformDirection(velocity).z > 0)
+        {
+            GetComponent<Rigidbody>().AddForce(-transform.forward * ((1 * 412 * gearsRatio[actualGear]) / 0.3f) + fDrag);
+            // We're moving forward
+        }
+        else
+        {
+            GetComponent<Rigidbody>().AddForce(transform.forward * ((1 * 412 * gearsRatio[actualGear]) / 0.3f) + fDrag);
+            // We're moving backward
         }
     }
 }

@@ -45,6 +45,8 @@ public class Wheel : MonoBehaviour
     private float fX;
     private float fY;
 
+    public Vector3 fDrag;
+
     public float wheelAngle;
 
     public bool isGrounded;
@@ -70,6 +72,7 @@ public class Wheel : MonoBehaviour
     private CarController car;
 
     public float fDrive;
+    public float fBrake;
 
     /*
     void OnDrawGizmos()
@@ -99,16 +102,12 @@ public class Wheel : MonoBehaviour
 
         if (Input.GetAxis("Throttle") > 0)
         {
-            fX = Input.GetAxis("Throttle") * fDrive;
+            fX = fDrive;
         }
         
-        if (Input.GetAxis("Brake") > 0 && velocity.magnitude > 0f)
+        if (Input.GetAxis("Brake") > 0)
         {
-            fX = Input.GetAxis("Brake") * -springForce;
-            if ((int)velocity.magnitude <= 0)
-            {
-                fX = 0f;
-            }
+            fX = fBrake;
         }
     }
 
@@ -138,7 +137,7 @@ public class Wheel : MonoBehaviour
 
             fY = wheelVelocityLS.x * springForce;
 
-            rb.AddForceAtPosition(suspensionForce + ((fX * transform.forward) + (fY * -transform.right)) , hit.point); // we apply the force to the model of the car itself
+            rb.AddForceAtPosition((suspensionForce + (fX * transform.forward) + (fY * -transform.right)), hit.point); // we apply the force to the model of the car itself
         }
     }
 }
