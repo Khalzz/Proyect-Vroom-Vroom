@@ -29,20 +29,74 @@ public class CarController : MonoBehaviour
     public int actualGear = 1;
     public float[] gearsRatio = new float[10];
 
+    // weight transfer
+    public float wF;
+    public float wR;
+
+    public float disBetweenAxis;
+    public float disRearCg;
+    public float disFrontCg;
+    public float weight;
+
+    public GameObject frontAxis;
+    public GameObject rearAxis;
+    public GameObject cG;
+
+    public Vector3 frontAxisPosition;
+    public Vector3 rearAxisPosition;
+    public Vector3 cgPosition;
+
+    // acceleration
+    public float acceleration;
+    public float distancemoved = 0;
+    public float lastdistancemoved = 0;
+    public Vector3 last;
+
     [Header("Inputs")]
     public float steerInput;
 
     public float ackermannAngleLeft;
     public float ackermannAngleRight;
 
+    private void Start()
+    {
+        last = transform.position;
+        weight = GetComponent<Rigidbody>().mass;
+    }
+
     void Update()
     {
+        // acceleration
+        distancemoved = Vector3.Distance(last, transform.position);
+        distancemoved *= Time.deltaTime;
+        acceleration = distancemoved - lastdistancemoved;
+        lastdistancemoved = distancemoved;
+        last = transform.position;
+        // acceleration
+
+        frontAxisPosition = frontAxis.transform.position;
+        rearAxisPosition = rearAxis.transform.position;
+        cgPosition = cG.transform.position;
+
+        disBetweenAxis = Vector3.Distance(rearAxisPosition, frontAxisPosition);
+        disRearCg = Vector3.Distance(rearAxisPosition, cgPosition);
+        disFrontCg = Vector3.Distance(frontAxisPosition, cgPosition);
+
+        if (velocity.magnitude == 0f)
+        {
+            wF = (disRearCg / disBetweenAxis) * weight;
+            wR = (disFrontCg / disBetweenAxis) * weight;
+        } 
+        else
+        {
+            wF = (disRearCg / disBetweenAxis) * weight - (cgPosition.y - disBetweenAxis) * (weight * 9.8f) * acceleration;
+            wR = (disFrontCg / disBetweenAxis) * weight + (cgPosition.y - disBetweenAxis) * (weight * 9.8f) * acceleration;
+        }
+
         velocity = GetComponent<Rigidbody>().velocity;
         fSpeed = Mathf.Sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
         fDrag.x = -cDrag * velocity.x * fSpeed;
         fDrag.z = -cDrag * velocity.z * fSpeed;
-
-
 
         rpm = (((GetComponent<Rigidbody>().velocity.magnitude * 0.621371f) * gearsRatio[actualGear] * 336) / 0.6f);
         speedText.text = (GetComponent<Rigidbody>().velocity.magnitude * 3.6f).ToString("F0") + "Km/h";
@@ -70,14 +124,11 @@ public class CarController : MonoBehaviour
             gearText.text = "N";
         }
 
-
-
         if (Input.GetButtonDown("UpShift"))
         {
             if (actualGear >= 0 && actualGear < 4)
             {
                 actualGear += 1;
-                print(actualGear);
             }
         }
 
@@ -86,13 +137,11 @@ public class CarController : MonoBehaviour
             if (actualGear > 0 && actualGear < 5)
             {
                 actualGear -= 1;
-                print(actualGear);
             }
         }
 
         if (Input.GetKey(KeyCode.R))
         {
-            print("Restart");
             GetComponent<Rigidbody>().AddForce(-transform.up * 100, ForceMode.Impulse);
         }
 
@@ -123,7 +172,11 @@ public class CarController : MonoBehaviour
                 w.steerAngle = ackermannAngleLeft;
             if (w.wheelFrontRight)
                 w.steerAngle = ackermannAngleRight;
-            w.fDrive = fDrive;
+            if (w.wheelRearLeft)
+                w.fDrive = fDrive;
+            if (w.wheelRearRight)
+                w.fDrive = fDrive;
+
             w.fDrag = fDrag;
             w.fBrake = fBrake;
         }

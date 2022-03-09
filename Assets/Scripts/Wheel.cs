@@ -109,6 +109,9 @@ public class Wheel : MonoBehaviour
         {
             fX = fBrake;
         }
+
+        print(suspensionForce);
+
     }
 
     void FixedUpdate()
@@ -134,6 +137,7 @@ public class Wheel : MonoBehaviour
                 to work with the local one we use inverse transfrom direction 
             */
             wheelVelocityLS = transform.InverseTransformDirection(rb.GetPointVelocity(hit.point));
+
 
             fY = wheelVelocityLS.x * springForce;
 
