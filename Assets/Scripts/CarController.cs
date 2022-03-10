@@ -28,6 +28,8 @@ public class CarController : MonoBehaviour
 
     public int actualGear = 1;
     public float[] gearsRatio = new float[10];
+    public int maxGears;
+    public int hp;
 
     // weight transfer
     public float wF;
@@ -86,7 +88,7 @@ public class CarController : MonoBehaviour
         {
             wF = (disRearCg / disBetweenAxis) * weight;
             wR = (disFrontCg / disBetweenAxis) * weight;
-        } 
+        }
         else
         {
             wF = (disRearCg / disBetweenAxis) * weight - (cgPosition.y - disBetweenAxis) * (weight * 9.8f) * acceleration;
@@ -109,13 +111,13 @@ public class CarController : MonoBehaviour
         }
         else
         {
-            fDrive = (Input.GetAxis("Throttle") * (412 * gearsRatio[actualGear]) / 0.3f);
+            fDrive = (Input.GetAxis("Throttle") * (((hp/rpm) * 5252) * gearsRatio[actualGear]) / 0.3f);
             fBrake = (Input.GetAxis("Brake") * -(412 * gearsRatio[actualGear]) / 0.3f);
         }
 
         rpmText.text = rpm.ToString();
 
-        if (actualGear >= 1 && actualGear < 4)
+        if (actualGear >= 1 && actualGear < maxGears)
         {
             gearText.text = (actualGear).ToString();
         }
@@ -126,7 +128,7 @@ public class CarController : MonoBehaviour
 
         if (Input.GetButtonDown("UpShift"))
         {
-            if (actualGear >= 0 && actualGear < 4)
+            if (actualGear >= 0 && actualGear < maxGears)
             {
                 actualGear += 1;
             }
@@ -134,7 +136,7 @@ public class CarController : MonoBehaviour
 
         if (Input.GetButtonDown("DownShift"))
         {
-            if (actualGear > 0 && actualGear < 5)
+            if (actualGear > 0 && actualGear < maxGears + 1)
             {
                 actualGear -= 1;
             }
@@ -152,7 +154,7 @@ public class CarController : MonoBehaviour
             // is turning Rignt
             ackermannAngleLeft = Mathf.Rad2Deg * Mathf.Atan(wheelBase / (turnRadius + (rearTracks / 2))) * steerInput;
             ackermannAngleRight = Mathf.Rad2Deg * Mathf.Atan(wheelBase / (turnRadius - (rearTracks / 2))) * steerInput;
-        } 
+        }
         else if (steerInput < 0)
         {
             // is turning left
