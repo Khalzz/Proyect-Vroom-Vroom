@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Wheel : MonoBehaviour
 {
-    public float dragCoefficient;
-    public float drag;
-    public Vector3 dragVector;
-    public Vector3 velocity;
-
     private Rigidbody rb;
 
     public bool wheelFrontLeft;
