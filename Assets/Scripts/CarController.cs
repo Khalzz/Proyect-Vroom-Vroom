@@ -20,6 +20,8 @@ public class CarController : MonoBehaviour
 
     public float fDrive;
     public float fBrake;
+    public float fDriveJustForce;
+
 
     public Vector3 velocity;
     public Vector3 fDrag;
@@ -54,6 +56,15 @@ public class CarController : MonoBehaviour
     public float lastdistancemoved = 0;
     public Vector3 last;
 
+    // traction
+    public float fTraction;
+    public float wheelRotationRate;
+    public float wheelRadius;
+
+    // slip
+    Vector3 longForce;
+
+
     [Header("Inputs")]
     public float steerInput;
 
@@ -83,7 +94,7 @@ public class CarController : MonoBehaviour
         disBetweenAxis = Vector3.Distance(rearAxisPosition, frontAxisPosition);
         disRearCg = Vector3.Distance(rearAxisPosition, cgPosition);
         disFrontCg = Vector3.Distance(frontAxisPosition, cgPosition);
-
+        
         if (velocity.magnitude == 0f)
         {
             wF = (disRearCg / disBetweenAxis) * weight;
@@ -100,7 +111,9 @@ public class CarController : MonoBehaviour
         fDrag.x = -cDrag * velocity.x * fSpeed;
         fDrag.z = -cDrag * velocity.z * fSpeed;
 
-        rpm = (((GetComponent<Rigidbody>().velocity.magnitude * 0.621371f) * gearsRatio[actualGear] * 336) / 0.6f);
+        wheelRotationRate = velocity.magnitude / wheelRadius;
+        rpm = ((wheelRotationRate * gearsRatio[actualGear] * (gearsRatio[1] + 0.5f)) * 60) / 6.28318530718f;
+        //rpm = (((GetComponent<Rigidbody>().velocity.magnitude * 0.621371f) * gearsRatio[actualGear] * 336) / 0.6f);
         speedText.text = (GetComponent<Rigidbody>().velocity.magnitude * 3.6f).ToString("F0") + "Km/h";
 
         if (rpm > maxRpm)
@@ -111,7 +124,7 @@ public class CarController : MonoBehaviour
         }
         else
         {
-            fDrive = (Input.GetAxis("Throttle") * (((hp/rpm) * 5252) * gearsRatio[actualGear]) / 0.3f);
+            fDrive = (((Input.GetAxis("Throttle") * (hp / rpm) * 5252) + fDrag.x + ((cDrag * 30)) + gearsRatio[actualGear]) / 0.3f) ;
             fBrake = (Input.GetAxis("Brake") * -(412 * gearsRatio[actualGear]) / 0.3f);
         }
 
@@ -178,7 +191,7 @@ public class CarController : MonoBehaviour
                 w.fDrive = fDrive;
             if (w.wheelRearRight)
                 w.fDrive = fDrive;
-
+            w.carLongForce = transform.forward;
             w.fDrag = fDrag;
             w.fBrake = fBrake;
         }

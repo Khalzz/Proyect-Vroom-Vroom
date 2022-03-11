@@ -58,6 +58,9 @@ public class Wheel : MonoBehaviour
     public LayerMask wheels;
     public Vector3 wheelPositionVector;
 
+    public Vector3 carLongForce;
+    public float slipAngle;
+
     [Header("Anti Stuck System")]
     public int raysNumber = 36;
     public float raysMaxAngle = 180f;
@@ -86,7 +89,6 @@ public class Wheel : MonoBehaviour
 
     void Update()
     {
-
         springLengthGetter = springLength;
         wheelPositionVector = new Vector3(transform.position.x, transform.position.y - springLength, transform.position.z);
         wheelAngle = Mathf.Lerp(wheelAngle, steerAngle, steerTime * Time.deltaTime);
@@ -105,8 +107,7 @@ public class Wheel : MonoBehaviour
             fX = fBrake;
         }
 
-        print(suspensionForce);
-
+        slipAngle = Mathf.Atan2(carLongForce.y - transform.localRotation.y, carLongForce.x - transform.localRotation.x);
     }
 
     void FixedUpdate()
@@ -134,9 +135,10 @@ public class Wheel : MonoBehaviour
             wheelVelocityLS = transform.InverseTransformDirection(rb.GetPointVelocity(hit.point));
 
 
-            fY = wheelVelocityLS.x * springForce;
+            fY = (wheelVelocityLS.x) * springForce;
 
-            rb.AddForceAtPosition((suspensionForce + (fX * transform.forward) + (fY * -transform.right)), hit.point); // we apply the force to the model of the car itself
+            rb.AddForceAtPosition((suspensionForce + (fX * transform.forward) + (fY * (-transform.right))), hit.point); // we apply the force to the model of the car itself
+
         }
     }
 }
