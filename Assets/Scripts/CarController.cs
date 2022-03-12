@@ -5,6 +5,8 @@ using TMPro;
 
 public class CarController : MonoBehaviour
 {
+    public Quaternion slipAngle;
+
     public Wheel[] wheels;
     public TextMeshProUGUI rpmText;
     public TextMeshProUGUI gearText;
@@ -71,14 +73,18 @@ public class CarController : MonoBehaviour
     public float ackermannAngleLeft;
     public float ackermannAngleRight;
 
+    public Rigidbody carRb;
+
     private void Start()
     {
+        carRb = GetComponent<Rigidbody>();
         last = transform.position;
         weight = GetComponent<Rigidbody>().mass;
     }
 
     void Update()
     {
+
         // acceleration
         distancemoved = Vector3.Distance(last, transform.position);
         distancemoved *= Time.deltaTime;
@@ -191,9 +197,10 @@ public class CarController : MonoBehaviour
                 w.fDrive = fDrive;
             if (w.wheelRearRight)
                 w.fDrive = fDrive;
-            w.carLongForce = transform.forward;
+            w.carLongForce = transform.rotation;
             w.fDrag = fDrag;
             w.fBrake = fBrake;
+            w.carRb = carRb;
         }
     }
 
