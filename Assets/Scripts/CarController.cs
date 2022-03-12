@@ -197,7 +197,7 @@ public class CarController : MonoBehaviour
                 w.fDrive = fDrive;
             if (w.wheelRearRight)
                 w.fDrive = fDrive;
-            w.carLongForce = transform.rotation;
+            w.carLongForce = transform.localRotation;
             w.fDrag = fDrag;
             w.fBrake = fBrake;
             w.carRb = carRb;

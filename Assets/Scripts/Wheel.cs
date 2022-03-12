@@ -59,7 +59,7 @@ public class Wheel : MonoBehaviour
     public Vector3 wheelPositionVector;
 
     public Quaternion carLongForce;
-    public Quaternion slipAngle;
+    public float slipAngle;
 
     [Header("Anti Stuck System")]
     public int raysNumber = 36;
@@ -91,30 +91,27 @@ public class Wheel : MonoBehaviour
     void Update()
     {
         //slipAngle.x = Mathf.Atan2(carLongForce.y - transform.localRotation.y, carLongForce.x - transform.localRotation.x);
-        slipAngle = Quaternion.Slerp(carLongForce, transform.rotation, 0.5f);
-
         springLengthGetter = springLength;
         wheelPositionVector = new Vector3(transform.position.x, transform.position.y - springLength, transform.position.z);
         wheelAngle = Mathf.Lerp(wheelAngle, steerAngle, steerTime * Time.deltaTime);
         transform.localRotation = Quaternion.Euler(Vector3.up * wheelAngle);
 
         Debug.DrawRay(transform.position, -transform.up * (springLength), Color.green); // spring length
-        Debug.DrawRay(transform.position, transform.forward * 100, Color.green); // spring length
-        
+        Debug.DrawRay(transform.position, transform.forward * 100, Color.green);
+
         isGrounded = Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, maxLength + wheelRadius);
 
         if (Input.GetAxis("Throttle") > 0)
         {
             fX = fDrive;
         }
-        
+
         if (Input.GetAxis("Brake") > 0)
         {
             fX = fBrake;
         }
-
-        print(Mathf.Atan(rb.GetPointVelocity(hit.point).x / Mathf.Max(Mathf.Abs(rb.GetPointVelocity(hit.point).z), 3.0f)) * Mathf.Rad2Deg);
-        Debug.DrawRay(transform.position, transform.forward * (Mathf.Atan(rb.GetPointVelocity(hit.point).x / Mathf.Max(Mathf.Abs(rb.GetPointVelocity(hit.point).z), 3.0f)) * Mathf.Rad2Deg), Color.green); // spring length
+        slipAngle = Mathf.Atan(carRb.transform.localRotation.x / Mathf.Max(Mathf.Abs(transform.rotation.z), 3.0f)) * Mathf.Rad2Deg;
+        Debug.DrawRay(transform.position, (Quaternion.AngleAxis(slipAngle, transform.up) * transform.localRotation) * transform.forward * 100, Color.red); // spring length
 
     }
 
@@ -145,7 +142,7 @@ public class Wheel : MonoBehaviour
 
             fY = wheelVelocityLS.x * springForce;
 
-            rb.AddForceAtPosition((suspensionForce + (fX * transform.forward) + (fY * (-transform.right))), hit.point); // we apply the force to the model of the car itself
+            rb.AddForceAtPosition((suspensionForce + (fX * transform.forward) + (fY * -transform.right)), hit.point); // we apply the force to the model of the car itself
 
         }
     }

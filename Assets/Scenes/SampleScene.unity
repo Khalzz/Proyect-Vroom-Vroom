@@ -3230,6 +3230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0dc47c74b082714cbbc32993580d847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   wheels:
   - {fileID: 990537502}
   - {fileID: 926284781}
@@ -3285,6 +3286,7 @@ MonoBehaviour:
   steerInput: 0
   ackermannAngleLeft: 0
   ackermannAngleRight: 0
+  carRb: {fileID: 0}
 --- !u!54 &354012523
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3658,6 +3660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0dc47c74b082714cbbc32993580d847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   wheels:
   - {fileID: 1186705036}
   - {fileID: 906807455}
@@ -3709,6 +3712,7 @@ MonoBehaviour:
   steerInput: 0
   ackermannAngleLeft: 0
   ackermannAngleRight: 0
+  carRb: {fileID: 0}
 --- !u!114 &513080608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6920,12 +6924,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   wheelPositionVector: {x: 0, y: 0, z: 0}
-  carLongForce: {x: 0, y: 0, z: 0}
-  slipAngle: {x: 0, y: 0, z: 0}
+  carLongForce: {x: 0, y: 0, z: 0, w: 0}
+  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   raysNumber: 100
   raysMaxAngle: 180
   fDrive: 0
   fBrake: 0
+  carRb: {fileID: 0}
 --- !u!114 &906807456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7498,12 +7503,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   wheelPositionVector: {x: 0, y: 0, z: 0}
-  carLongForce: {x: 0, y: 0, z: 0}
-  slipAngle: {x: 0, y: 0, z: 0}
+  carLongForce: {x: 0, y: 0, z: 0, w: 0}
+  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   raysNumber: 100
   raysMaxAngle: 180
   fDrive: 0
   fBrake: 0
+  carRb: {fileID: 0}
 --- !u!1 &951961765
 GameObject:
   m_ObjectHideFlags: 0
@@ -8053,12 +8059,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   wheelPositionVector: {x: 0, y: 0, z: 0}
-  carLongForce: {x: 0, y: 0, z: 0}
-  slipAngle: {x: 0, y: 0, z: 0}
+  carLongForce: {x: 0, y: 0, z: 0, w: 0}
+  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   raysNumber: 100
   raysMaxAngle: 180
   fDrive: 0
   fBrake: 0
+  carRb: {fileID: 0}
 --- !u!4 &991867863 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b18ee5250e6174146a704d3c67a2b5d0, type: 3}
@@ -8168,12 +8175,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   wheelPositionVector: {x: 0, y: 0, z: 0}
-  carLongForce: {x: 0, y: 0, z: 0}
-  slipAngle: {x: 0, y: 0, z: 0}
+  carLongForce: {x: 0, y: 0, z: 0, w: 0}
+  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   raysNumber: 100
   raysMaxAngle: 180
   fDrive: 0
   fBrake: 0
+  carRb: {fileID: 0}
 --- !u!114 &1079857671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8972,12 +8980,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   wheelPositionVector: {x: 0, y: 0, z: 0}
-  carLongForce: {x: 0, y: 0, z: 0}
-  slipAngle: {x: 0, y: 0, z: 0}
+  carLongForce: {x: 0, y: 0, z: 0, w: 0}
+  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   raysNumber: 100
   raysMaxAngle: 180
   fDrive: 0
   fBrake: 0
+  carRb: {fileID: 0}
 --- !u!114 &1186705037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12286,12 +12295,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   wheelPositionVector: {x: 0, y: 0, z: 0}
-  carLongForce: {x: 0, y: 0, z: 0}
-  slipAngle: {x: 0, y: 0, z: 0}
+  carLongForce: {x: 0, y: 0, z: 0, w: 0}
+  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   raysNumber: 100
   raysMaxAngle: 180
   fDrive: 0
   fBrake: 0
+  carRb: {fileID: 0}
 --- !u!114 &1480266338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13147,12 +13157,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   wheelPositionVector: {x: 0, y: 0, z: 0}
-  carLongForce: {x: 0, y: 0, z: 0}
-  slipAngle: {x: 0, y: 0, z: 0}
+  carLongForce: {x: 0, y: 0, z: 0, w: 0}
+  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   raysNumber: 100
   raysMaxAngle: 180
   fDrive: 0
   fBrake: 0
+  carRb: {fileID: 0}
 --- !u!114 &1584370624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17371,12 +17382,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   wheelPositionVector: {x: 0, y: 0, z: 0}
-  carLongForce: {x: 0, y: 0, z: 0}
-  slipAngle: {x: 0, y: 0, z: 0}
+  carLongForce: {x: 0, y: 0, z: 0, w: 0}
+  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   raysNumber: 100
   raysMaxAngle: 180
   fDrive: 0
   fBrake: 0
+  carRb: {fileID: 0}
 --- !u!1 &2068090805
 GameObject:
   m_ObjectHideFlags: 0
