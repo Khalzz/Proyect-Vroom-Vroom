@@ -75,6 +75,7 @@ public class Wheel : MonoBehaviour
 
     public Rigidbody carRb;
 
+    public float slipAngle;
     public float slipRatio; // change to float
     /*
     void OnDrawGizmos()
@@ -93,8 +94,7 @@ public class Wheel : MonoBehaviour
 
     void Update()
     {
-        //slipAngle = (Mathf.Atan(wheelAxis.transform.localRotation.x / Mathf.Max(Mathf.Abs(transform.localRotation.z), 3.0f)) * Mathf.Rad2Deg);
-        //slipAngle.x = Mathf.Atan2(carLongForce.y - transform.localRotation.y, carLongForce.x - transform.localRotation.x);
+        slipAngle = ((Mathf.Atan(transform.localRotation.y / Mathf.Max(Mathf.Abs(carRb.transform.localRotation.x), 3.0f))) * Mathf.Rad2Deg);
         springLengthGetter = springLength;
         wheelPositionVector = new Vector3(transform.position.x, transform.position.y - springLength, transform.position.z);
         wheelAngle = Mathf.Lerp(wheelAngle, steerAngle, steerTime * Time.deltaTime);
@@ -114,11 +114,11 @@ public class Wheel : MonoBehaviour
             fX = fBrake;
         }
 
-        //Debug.DrawRay(transform.position,(Quaternion.AngleAxis(slipAngle, transform.up) * transform.localRotation) * transform.forward * 100, Color.red); // spring length
+        Debug.DrawRay(carRb.transform.position,(Quaternion.AngleAxis(slipAngle, transform.up) * transform.localRotation) * transform.forward * 100, Color.red); // spring length
         Debug.DrawRay(carRb.transform.position, carRb.transform.forward * 100, Color.blue);
         Debug.DrawRay(transform.position, transform.forward * 100, Color.green);
 
-        print("slip Ratio: " + slipRatio + " wheel angular velocity " + fY);
+        print("slip Ratio: " + slipRatio + " wheel angular velocity: " + fY + " slip angle(rads): " + slipAngle + " slip angle(ang): " + slipAngle * 180/3.14);
     }
 
     void FixedUpdate()
