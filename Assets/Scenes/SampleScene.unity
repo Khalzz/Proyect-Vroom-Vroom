@@ -1541,6 +1541,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &158564731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 158564732}
+  m_Layer: 0
+  m_Name: WheelPoint LF
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &158564732
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158564731}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.8, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 860417044}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &184997547
 GameObject:
   m_ObjectHideFlags: 0
@@ -6275,7 +6306,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 158564732}
   - {fileID: 990537500}
+  - {fileID: 1182979568}
   - {fileID: 926284779}
   m_Father: {fileID: 354012524}
   m_RootOrder: 4
@@ -6903,6 +6936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d72a92f5f4e2b214ab71d20922f35a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wheelAxis: {fileID: 0}
   wheelFrontLeft: 0
   wheelFrontRight: 1
   wheelRearLeft: 0
@@ -6925,12 +6959,12 @@ MonoBehaviour:
     m_Bits: 64
   wheelPositionVector: {x: 0, y: 0, z: 0}
   carLongForce: {x: 0, y: 0, z: 0, w: 0}
-  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   raysNumber: 100
   raysMaxAngle: 180
   fDrive: 0
   fBrake: 0
   carRb: {fileID: 0}
+  slipRatio: 0
 --- !u!114 &906807456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7451,7 +7485,7 @@ Transform:
   m_Children:
   - {fileID: 1203410811}
   m_Father: {fileID: 860417044}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &926284780
 MonoBehaviour:
@@ -7482,6 +7516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d72a92f5f4e2b214ab71d20922f35a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wheelAxis: {fileID: 1182979567}
   wheelFrontLeft: 0
   wheelFrontRight: 1
   wheelRearLeft: 0
@@ -7504,12 +7539,12 @@ MonoBehaviour:
     m_Bits: 64
   wheelPositionVector: {x: 0, y: 0, z: 0}
   carLongForce: {x: 0, y: 0, z: 0, w: 0}
-  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   raysNumber: 100
   raysMaxAngle: 180
   fDrive: 0
   fBrake: 0
   carRb: {fileID: 0}
+  slipRatio: 0
 --- !u!1 &951961765
 GameObject:
   m_ObjectHideFlags: 0
@@ -7891,6 +7926,37 @@ Transform:
   m_Father: {fileID: 2087679617}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &962592482
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 962592483}
+  m_Layer: 0
+  m_Name: WheelPoint RB
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &962592483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962592482}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.8, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1981347341}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -8007,7 +8073,7 @@ Transform:
   m_Children:
   - {fileID: 672670758}
   m_Father: {fileID: 860417044}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &990537501
 MonoBehaviour:
@@ -8038,6 +8104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d72a92f5f4e2b214ab71d20922f35a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wheelAxis: {fileID: 158564731}
   wheelFrontLeft: 1
   wheelFrontRight: 0
   wheelRearLeft: 0
@@ -8060,12 +8127,12 @@ MonoBehaviour:
     m_Bits: 64
   wheelPositionVector: {x: 0, y: 0, z: 0}
   carLongForce: {x: 0, y: 0, z: 0, w: 0}
-  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   raysNumber: 100
   raysMaxAngle: 180
   fDrive: 0
   fBrake: 0
   carRb: {fileID: 0}
+  slipRatio: 0
 --- !u!4 &991867863 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b18ee5250e6174146a704d3c67a2b5d0, type: 3}
@@ -8154,6 +8221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d72a92f5f4e2b214ab71d20922f35a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wheelAxis: {fileID: 0}
   wheelFrontLeft: 0
   wheelFrontRight: 0
   wheelRearLeft: 1
@@ -8176,12 +8244,12 @@ MonoBehaviour:
     m_Bits: 64
   wheelPositionVector: {x: 0, y: 0, z: 0}
   carLongForce: {x: 0, y: 0, z: 0, w: 0}
-  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   raysNumber: 100
   raysMaxAngle: 180
   fDrive: 0
   fBrake: 0
   carRb: {fileID: 0}
+  slipRatio: 0
 --- !u!114 &1079857671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8913,6 +8981,37 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1182979567
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1182979568}
+  m_Layer: 0
+  m_Name: WheelPoint RF
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1182979568
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182979567}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.8, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 860417044}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1186705034
 GameObject:
   m_ObjectHideFlags: 0
@@ -8959,6 +9058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d72a92f5f4e2b214ab71d20922f35a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wheelAxis: {fileID: 0}
   wheelFrontLeft: 1
   wheelFrontRight: 0
   wheelRearLeft: 0
@@ -8981,12 +9081,12 @@ MonoBehaviour:
     m_Bits: 64
   wheelPositionVector: {x: 0, y: 0, z: 0}
   carLongForce: {x: 0, y: 0, z: 0, w: 0}
-  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   raysNumber: 100
   raysMaxAngle: 180
   fDrive: 0
   fBrake: 0
   carRb: {fileID: 0}
+  slipRatio: 0
 --- !u!114 &1186705037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12274,6 +12374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d72a92f5f4e2b214ab71d20922f35a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wheelAxis: {fileID: 962592482}
   wheelFrontLeft: 0
   wheelFrontRight: 0
   wheelRearLeft: 0
@@ -12296,12 +12397,12 @@ MonoBehaviour:
     m_Bits: 64
   wheelPositionVector: {x: 0, y: 0, z: 0}
   carLongForce: {x: 0, y: 0, z: 0, w: 0}
-  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   raysNumber: 100
   raysMaxAngle: 180
   fDrive: 0
   fBrake: 0
   carRb: {fileID: 0}
+  slipRatio: 0
 --- !u!114 &1480266338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12333,7 +12434,7 @@ Transform:
   m_Children:
   - {fileID: 682945166}
   m_Father: {fileID: 1981347341}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1503203917
 Mesh:
@@ -13090,6 +13191,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524665104}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1536420532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1536420533}
+  m_Layer: 0
+  m_Name: WheelPoint LB
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1536420533
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536420532}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.8, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1981347341}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1584370621
 GameObject:
   m_ObjectHideFlags: 0
@@ -13136,6 +13268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d72a92f5f4e2b214ab71d20922f35a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wheelAxis: {fileID: 0}
   wheelFrontLeft: 0
   wheelFrontRight: 0
   wheelRearLeft: 0
@@ -13158,12 +13291,12 @@ MonoBehaviour:
     m_Bits: 64
   wheelPositionVector: {x: 0, y: 0, z: 0}
   carLongForce: {x: 0, y: 0, z: 0, w: 0}
-  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   raysNumber: 100
   raysMaxAngle: 180
   fDrive: 0
   fBrake: 0
   carRb: {fileID: 0}
+  slipRatio: 0
 --- !u!114 &1584370624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16327,7 +16460,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1536420533}
   - {fileID: 2046270270}
+  - {fileID: 962592483}
   - {fileID: 1480266339}
   m_Father: {fileID: 354012524}
   m_RootOrder: 5
@@ -17330,7 +17465,7 @@ Transform:
   m_Children:
   - {fileID: 1854231855}
   m_Father: {fileID: 1981347341}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2046270271
 MonoBehaviour:
@@ -17361,6 +17496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d72a92f5f4e2b214ab71d20922f35a1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wheelAxis: {fileID: 1536420532}
   wheelFrontLeft: 0
   wheelFrontRight: 0
   wheelRearLeft: 1
@@ -17383,12 +17519,12 @@ MonoBehaviour:
     m_Bits: 64
   wheelPositionVector: {x: 0, y: 0, z: 0}
   carLongForce: {x: 0, y: 0, z: 0, w: 0}
-  slipAngle: {x: 0, y: 0, z: 0, w: 0}
   raysNumber: 100
   raysMaxAngle: 180
   fDrive: 0
   fBrake: 0
   carRb: {fileID: 0}
+  slipRatio: 0
 --- !u!1 &2068090805
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,8 @@ public class Wheel : MonoBehaviour
 {
     private Rigidbody rb;
 
+    public GameObject wheelAxis;
+
     public bool wheelFrontLeft;
     public bool wheelFrontRight;
     public bool wheelRearLeft;
@@ -59,7 +61,6 @@ public class Wheel : MonoBehaviour
     public Vector3 wheelPositionVector;
 
     public Quaternion carLongForce;
-    public float slipAngle;
 
     [Header("Anti Stuck System")]
     public int raysNumber = 36;
@@ -73,6 +74,8 @@ public class Wheel : MonoBehaviour
     public float fBrake;
 
     public Rigidbody carRb;
+
+    public float slipRatio; // change to float
     /*
     void OnDrawGizmos()
     {
@@ -90,6 +93,7 @@ public class Wheel : MonoBehaviour
 
     void Update()
     {
+        //slipAngle = (Mathf.Atan(wheelAxis.transform.localRotation.x / Mathf.Max(Mathf.Abs(transform.localRotation.z), 3.0f)) * Mathf.Rad2Deg);
         //slipAngle.x = Mathf.Atan2(carLongForce.y - transform.localRotation.y, carLongForce.x - transform.localRotation.x);
         springLengthGetter = springLength;
         wheelPositionVector = new Vector3(transform.position.x, transform.position.y - springLength, transform.position.z);
@@ -97,7 +101,6 @@ public class Wheel : MonoBehaviour
         transform.localRotation = Quaternion.Euler(Vector3.up * wheelAngle);
 
         Debug.DrawRay(transform.position, -transform.up * (springLength), Color.green); // spring length
-        Debug.DrawRay(transform.position, transform.forward * 100, Color.green);
 
         isGrounded = Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, maxLength + wheelRadius);
 
@@ -110,9 +113,12 @@ public class Wheel : MonoBehaviour
         {
             fX = fBrake;
         }
-        slipAngle = Mathf.Atan(carRb.transform.localRotation.x / Mathf.Max(Mathf.Abs(transform.rotation.z), 3.0f)) * Mathf.Rad2Deg;
-        Debug.DrawRay(transform.position, (Quaternion.AngleAxis(slipAngle, transform.up) * transform.localRotation) * transform.forward * 100, Color.red); // spring length
 
+        //Debug.DrawRay(transform.position,(Quaternion.AngleAxis(slipAngle, transform.up) * transform.localRotation) * transform.forward * 100, Color.red); // spring length
+        Debug.DrawRay(carRb.transform.position, carRb.transform.forward * 100, Color.blue);
+        Debug.DrawRay(transform.position, transform.forward * 100, Color.green);
+
+        print("slip Ratio: " + slipRatio + " wheel angular velocity " + fY);
     }
 
     void FixedUpdate()
@@ -139,8 +145,9 @@ public class Wheel : MonoBehaviour
             */
             wheelVelocityLS = transform.InverseTransformDirection(rb.GetPointVelocity(hit.point));
 
-
             fY = wheelVelocityLS.x * springForce;
+
+            slipRatio = (fY * wheelRadius - carRb.velocity.magnitude) / -carRb.velocity.magnitude;
 
             rb.AddForceAtPosition((suspensionForce + (fX * transform.forward) + (fY * -transform.right)), hit.point); // we apply the force to the model of the car itself
 
