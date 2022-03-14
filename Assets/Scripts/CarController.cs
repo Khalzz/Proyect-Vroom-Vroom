@@ -193,14 +193,12 @@ public class CarController : MonoBehaviour
                 w.steerAngle = ackermannAngleLeft;
             if (w.wheelFrontRight)
                 w.steerAngle = ackermannAngleRight;
-            /*
             if (w.wheelRearLeft)
                 w.fDrive = fDrive;
             if (w.wheelRearRight)
                 w.fDrive = fDrive;
-            */
-
-            w.fDrive = fDrive;
+            w.wheelRotationRate = wheelRotationRate;
+            w.wheelBase = wheelBase;
             w.carLongForce = transform.localRotation;
             w.fDrag = fDrag;
             w.fBrake = fBrake;
