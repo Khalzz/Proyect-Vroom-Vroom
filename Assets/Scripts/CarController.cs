@@ -204,6 +204,8 @@ public class CarController : MonoBehaviour
             w.fBrake = fBrake;
             w.carRb = carRb;
         }
+
+        
     }
 
     private void FixedUpdate()

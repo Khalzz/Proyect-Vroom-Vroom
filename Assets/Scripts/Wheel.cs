@@ -101,7 +101,6 @@ public class Wheel : MonoBehaviour
 
     void Update()
     {
-        slipRatioText.text = slipRatio.ToString();
         slipAngle = ((Mathf.Atan(transform.localRotation.y / Mathf.Max(Mathf.Abs(carRb.transform.localRotation.x), 3.0f))) * Mathf.Rad2Deg);
         springLengthGetter = springLength;
         wheelPositionVector = new Vector3(transform.position.x, transform.position.y - springLength, transform.position.z);
@@ -122,7 +121,7 @@ public class Wheel : MonoBehaviour
             fX = fBrake;
         }
 
-        Debug.DrawRay(carRb.transform.position,(Quaternion.AngleAxis(slipAngle, transform.up) * transform.localRotation) * transform.forward * 100, Color.red); // spring length
+        Debug.DrawRay(carRb.transform.position, (Quaternion.AngleAxis(slipAngle, transform.up) * transform.localRotation) * transform.forward * 100, Color.red); // spring length
         Debug.DrawRay(carRb.transform.position, carRb.transform.forward * 100, Color.blue);
         Debug.DrawRay(transform.position, transform.forward * 100, Color.green);
         circleRadius = wheelBase / Mathf.Sin(Vector3.Angle(transform.right, carRb.transform.right));
@@ -130,8 +129,11 @@ public class Wheel : MonoBehaviour
         {
             //print("slip Ratio: " + slipRatio + " wheel angular velocity: " + fY + " slip angle(rads): " + slipAngle + " Angular Speed: " + (fX));
         }
-        slipRatio = (((((wheelRotationRate / 3.6f)* Mathf.Deg2Rad) - carRb.velocity.magnitude) / -carRb.velocity.magnitude));
-        print((wheelRotationRate / 3.6));
+        slipRatio = ((AngularVelocity(carRb.velocity.magnitude, wheelRadius)) * wheelRadius) - (carRb.velocity.magnitude) /  (-carRb.velocity.magnitude);
+        //print((transform.forward * carRb.velocity.magnitude).magnitude + " // " + wheelRotationRate / 3.6 + " // " + ((transform.forward*wheelRotationRate) * 3.6f).magnitude) ;
+        slipRatioText.text = slipRatio.ToString();
+
+        //print(((wheelRadius * (2 * Mathf.PI))/360)/Time.deltaTime);
     }
 
     void FixedUpdate()
@@ -164,5 +166,10 @@ public class Wheel : MonoBehaviour
             rb.AddForceAtPosition((suspensionForce + (fX * transform.forward) + (fY * -transform.right)), hit.point); // we apply the force to the model of the car itself
 
         }
+    }
+
+    float AngularVelocity(float linearVelocity, float wheelRadius)
+    {
+        return linearVelocity/wheelRadius;
     }
 }
