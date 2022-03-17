@@ -84,6 +84,17 @@ public class Wheel : MonoBehaviour
     public float wheelBase;
     private float circleRadius;
     public float wheelRotationRate;
+
+    // longitudinal calculations
+    public float vLong;
+    public float wheelAngularVelocity;
+    public float engineTorque;
+
+    public float slip;
+    public float wheelRpm;
+    public float engineRpm;
+    public float gearRatio;
+
     /*
     void OnDrawGizmos()
     {
@@ -101,6 +112,7 @@ public class Wheel : MonoBehaviour
 
     void Update()
     {
+        AngularVelocityCalculations();
         slipAngle = ((Mathf.Atan(transform.localRotation.y / Mathf.Max(Mathf.Abs(carRb.transform.localRotation.x), 3.0f))) * Mathf.Rad2Deg);
         springLengthGetter = springLength;
         wheelPositionVector = new Vector3(transform.position.x, transform.position.y - springLength, transform.position.z);
@@ -129,7 +141,8 @@ public class Wheel : MonoBehaviour
         {
             //print("slip Ratio: " + slipRatio + " wheel angular velocity: " + fY + " slip angle(rads): " + slipAngle + " Angular Speed: " + (fX));
         }
-        slipRatio = ((AngularVelocity(carRb.velocity.magnitude, wheelRadius)) * wheelRadius) - (carRb.velocity.magnitude) /  (-carRb.velocity.magnitude);
+        wheelRpm = engineRpm / gearRatio;
+        print(carRb.velocity / wheelRadius);
         //print((transform.forward * carRb.velocity.magnitude).magnitude + " // " + wheelRotationRate / 3.6 + " // " + ((transform.forward*wheelRotationRate) * 3.6f).magnitude) ;
         slipRatioText.text = slipRatio.ToString();
 
@@ -162,14 +175,23 @@ public class Wheel : MonoBehaviour
 
             fY = wheelVelocityLS.x * springForce;
 
-
-            rb.AddForceAtPosition((suspensionForce + (fX * transform.forward) + (fY * -transform.right)), hit.point); // we apply the force to the model of the car itself
-
+            rb.AddForceAtPosition((suspensionForce + (fX * transform.forward) + ((fY * -transform.right))), hit.point); // we apply the force to the model of the car itself
         }
     }
 
     float AngularVelocity(float linearVelocity, float wheelRadius)
     {
         return linearVelocity/wheelRadius;
+    }
+
+    void AngularVelocityCalculations()
+    {
+        float torque = 0;
+        torque += engineTorque;
+        //print(torque);
+
+        wheelAngularVelocity = torque / (3) * Mathf.Pow(wheelRadius, 2) / 2 * Time.deltaTime;
+        slipRatio = ((carRb.velocity.magnitude * wheelRadius) - (carRb.velocity.magnitude));
+        //print(slipRatio);
     }
 }

@@ -62,6 +62,7 @@ public class CarController : MonoBehaviour
     public float fTraction;
     public float wheelRotationRate;
     public float wheelRadius;
+    public float torque;
 
     // slip
     Vector3 longForce;
@@ -74,6 +75,7 @@ public class CarController : MonoBehaviour
     public float ackermannAngleRight;
 
     public Rigidbody carRb;
+
 
     private void Start()
     {
@@ -121,7 +123,7 @@ public class CarController : MonoBehaviour
         rpm = ((wheelRotationRate * gearsRatio[actualGear] * (gearsRatio[1] + 0.5f)) * 60) / 6.28318530718f;
         //rpm = (((GetComponent<Rigidbody>().velocity.magnitude * 0.621371f) * gearsRatio[actualGear] * 336) / 0.6f);
         speedText.text = (GetComponent<Rigidbody>().velocity.magnitude * 3.6f).ToString("F0") + "Km/h";
-
+        torque = (hp / rpm) * 5252;
         if (rpm > maxRpm)
         {
             rpm = maxRpm;
@@ -132,6 +134,11 @@ public class CarController : MonoBehaviour
         {
             fDrive = (((Input.GetAxis("Throttle") * (hp / rpm) * 5252) + fDrag.x + ((cDrag * 30)) + gearsRatio[actualGear]) / 0.3f) ;
             fBrake = (Input.GetAxis("Brake") * -(412 * gearsRatio[actualGear]) / 0.3f);
+        }
+
+        if (Input.GetAxis("Throttle") <= 0)
+        {
+            rpm = 0;
         }
 
         rpmText.text = rpm.ToString();
@@ -203,6 +210,9 @@ public class CarController : MonoBehaviour
             w.fDrag = fDrag;
             w.fBrake = fBrake;
             w.carRb = carRb;
+            w.engineTorque = torque;
+            w.gearRatio = actualGear;
+            w.engineRpm = rpm;
         }
 
         
