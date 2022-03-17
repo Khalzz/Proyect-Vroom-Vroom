@@ -86,7 +86,7 @@ public class Wheel : MonoBehaviour
     public float wheelRotationRate;
 
     // longitudinal calculations
-    public float vLong;
+    public Vector3 vLong;
     public float wheelAngularVelocity;
     public float engineTorque;
 
@@ -187,11 +187,13 @@ public class Wheel : MonoBehaviour
     void AngularVelocityCalculations()
     {
         float torque = 0;
+        vLong = wheelVelocityLS;
         torque += engineTorque;
         //print(torque);
 
-        wheelAngularVelocity = torque / (3) * Mathf.Pow(wheelRadius, 2) / 2 * Time.deltaTime;
-        slipRatio = ((carRb.velocity.magnitude * wheelRadius) - (carRb.velocity.magnitude));
+        // i need to see how can i get a better value for the "angular mass" on the angular velocity value
+        wheelAngularVelocity = torque / (3 * wheelRadius * carRb.velocity.magnitude) * Mathf.Pow(wheelRadius, 2) / 2 * Time.deltaTime;
+        slipRatio = (((wheelAngularVelocity * wheelRadius)/ (vLong.x)) - 1);
         //print(slipRatio);
     }
 }
