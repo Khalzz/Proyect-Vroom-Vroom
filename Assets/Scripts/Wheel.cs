@@ -192,8 +192,8 @@ public class Wheel : MonoBehaviour
         //print(torque);
 
         // i need to see how can i get a better value for the "angular mass" on the angular velocity value
-        wheelAngularVelocity = torque / (3 * wheelRadius * carRb.velocity.magnitude) * Mathf.Pow(wheelRadius, 2) / 2 * Time.deltaTime;
-        slipRatio = (((wheelAngularVelocity * wheelRadius)/ (vLong.x)) - 1);
+        wheelAngularVelocity = torque / (3 * wheelRadius * (fX)) * Mathf.Pow(wheelRadius, 2) / 2 * Time.deltaTime;
+        slipRatio = (((wheelAngularVelocity * wheelRadius)/ (vLong.x)));
         //print(slipRatio);
     }
 }
